@@ -16,7 +16,28 @@ const MesssageStore = {
   },
   getSentMessages: function() {
     return messages.sent;
+  },
+  updateDraftField: function(field, value) {
+    messageDraft[field] = value;
+  },
+  sendDraft: function() {
+    messages.sent.push(messageDraft);
+    messageDraft = new Message();
+  },
+  getMessageDraft: function() {
+    return messageDraft;
   }
 };
+
+class Message {
+  constructor(from, to, subject, body) {
+    this.from = from;
+    this.to = to;
+    this.subject = subject;
+    this.body = body;
+  }
+}
+
+let messageDraft = new Message();
 
 module.exports = MesssageStore;
