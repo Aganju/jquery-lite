@@ -65,9 +65,50 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Router = __webpack_require__(1);
+
+document.addEventListener("DOMContentLoaded", () => {
+  let content = document.querySelector('.content');
+  const contentRouter = new Router(content);
+  contentRouter.start();
+  let targets = document.querySelectorAll('.sidebar-nav li');
+  [].slice.call(targets).forEach((el) => {
+    el.addEventListener('click', (e) => {
+      window.location.hash = e.currentTarget.innerText.toLowerCase();
+    });
+  });
+});
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports) {
 
-console.log("It's working!");
+class Router{
+  constructor(node){
+    this.node = node;
+  }
+
+  start(){
+    this.render();
+    window.addEventListener('hashchange', () => this.render());
+  }
+
+  activeRoute(){
+    return window.location.hash.slice(1);
+  }
+
+  render(){
+    this.node.innerHTML = '';
+    let p = document.createElement('p');
+    p.innerHTML = this.activeRoute();
+    this.node.appendChild(p);
+  }
+}
+
+module.exports = Router;
 
 
 /***/ })
